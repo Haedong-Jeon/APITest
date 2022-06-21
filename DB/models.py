@@ -1,3 +1,4 @@
+from ast import For
 from .database import Base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
@@ -19,4 +20,14 @@ class DbPost(Base):
     caption = Column(String)
     timestmap = Column(DateTime)
     user_id = Column(Integer, ForeignKey("user.id"))
+    comments = relationship("DbComment", back_populates = "post")
     user = relationship("DbUser", back_populates = "items")
+
+class DbComment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True, index=True),
+    text = Column(String),
+    user = Column(String),
+    timestamp = Column(DateTime)
+    post_id = Column(Integer, ForeignKey("post.id"))
+    post = relationship("DbPost", back_populates = "comments")
