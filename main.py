@@ -2,9 +2,11 @@ from fastapi import FastAPI
 from DB import models
 from DB.database import engine
 from Router import user 
+from Router import post
 
 app = FastAPI()
 app.include_router(user.router)
+app.include_router(post.router)
 
 @app.get("")
 def root():
