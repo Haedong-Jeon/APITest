@@ -4,6 +4,8 @@ from DB.database import engine
 from Router import user 
 from Router import post
 
+from fastapi.staticfiles import StaticFiles
+
 app = FastAPI()
 app.include_router(user.router)
 app.include_router(post.router)
@@ -13,3 +15,4 @@ def root():
     return "Hello world";
 
 models.Base.metadata.create_all(engine)
+app.mount("/images", StaticFiles(directory="images"), name = "images")
